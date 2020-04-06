@@ -11,7 +11,7 @@ public class PlayerHealthBar : MonoBehaviour
 
     private void Awake()
     {
-        health = GetComponent<PlayerHealth>();
+        health = GetComponentInParent<PlayerHealth>();
     }
 
     private void OnEnable()

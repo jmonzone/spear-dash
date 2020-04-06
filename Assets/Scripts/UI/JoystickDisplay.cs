@@ -13,7 +13,7 @@ public class JoystickDisplay : MonoBehaviour
 
     private void Awake()
     {
-        var input = GetComponent<JoystickInput>();
+        var input = GetComponent<Joystick>();
         input.OnDirectionSelectStart += () =>
         {
             stick.gameObject.SetActive(true);
@@ -21,9 +21,9 @@ public class JoystickDisplay : MonoBehaviour
 
         input.OnDirectionIsSelecting += (direction) =>
         {
-            var distance = Input.mousePosition - background.transform.position;
-            if (distance.magnitude > stickRadius) distance = distance.normalized * stickRadius;
-            stick.transform.position = background.transform.position + distance;
+            direction *= GameManager.Instance.JoystickSensitivity;
+            if (direction.magnitude > stickRadius) direction = direction.normalized * stickRadius;
+            stick.transform.position = background.transform.position + direction;
 
             arrow.gameObject.SetActive(true);
 
@@ -31,13 +31,16 @@ public class JoystickDisplay : MonoBehaviour
             arrow.position = background.transform.position + direction.normalized * 200.0f;
         };
 
-        input.OnDirectionSelectEnd += (direction) =>
-        {
-            if (hideJoystick) stick.gameObject.SetActive(false);
-            stick.transform.position = background.position;
-            arrow.gameObject.SetActive(false);
-        };
+        input.OnDirectionSelectEnd += (direction) => ResetDisplay();
+        input.OnDirectionCanceled += () => ResetDisplay();
 
+        arrow.gameObject.SetActive(false);
+    }
+
+    public void ResetDisplay()
+    {
+        if (hideJoystick) stick.gameObject.SetActive(false);
+        stick.transform.position = background.position;
         arrow.gameObject.SetActive(false);
     }
 }

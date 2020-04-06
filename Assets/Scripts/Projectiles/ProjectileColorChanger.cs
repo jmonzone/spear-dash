@@ -1,12 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
 using UnityEngine;
 
-public class ProjectileColorChanger : MonoBehaviour
+public class ProjectileColorChanger : MonoBehaviourPun
 {
-    private void OnEnable()
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
     {
-        var spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void OnDisable()
+    {
         spriteRenderer.color = gameObject.layer == 10 ? Color.white : Color.green;
     }
 }

@@ -12,6 +12,7 @@ public class ArenaManager : MonoBehaviour
     private SpriteRenderer sprite;
 
     public Vector2 Size => new Vector2(sprite.size.x * dimensions.x, sprite.size.y * dimensions.y);
+    public Vector2 Dimensions => dimensions;
 
     private void Awake()
     {

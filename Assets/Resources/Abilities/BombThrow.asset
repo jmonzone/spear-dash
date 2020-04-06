@@ -16,7 +16,8 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 3495ff9f530360a41b88bdefc93415af, type: 3}
   abilityType: 2
   targetType: 1
-  cooldown: 3
+  cooldown: 2.5
   range: 6
   damage: 4
-  speed: 2.5
+  speed: 2
+  projectileCount: 5

@@ -12,10 +12,10 @@ public class Dash : PlayerAbility
     {
         base.OnAbilityRequestEnd(direction);
 
-        var startPosition = transform.position;
-        while ((transform.position - startPosition).magnitude < Range)
+        var startPosition = player.Position;
+        while ((player.Position - startPosition).magnitude < Range)
         {
-            transform.Translate(direction * Time.deltaTime * Speed);
+            player.Translate(direction * Time.deltaTime * Speed);
             yield return new WaitForFixedUpdate();
         }
 

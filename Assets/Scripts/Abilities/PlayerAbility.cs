@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 public struct AbilityEventArgs
@@ -15,31 +16,30 @@ public abstract class PlayerAbility : MonoBehaviour
     public Sprite AbilityIcon => data.AbilityIcon;
     public TargetingType TargetType => data.TargetType;
     public AbilityType AbilityType => data.AbilityType;
-    private float cooldown;
-    protected float Range => data.Range;
+    public float Cooldown => GameManager.Instance.TestMode ? 0.0f : data.Cooldown;
+    public float Range => data.Range;
     protected float Damage => data.Damage;
     protected float Speed => data.Speed;
+    protected float ProjectileCount => data.ProjectileCount;
 
     private AudioSource audioSource;
-
-    public bool OnCooldown { get; private set; }
+    protected ParticleSystem particle;
+    protected Player  player;
 
     public event Action<float> OnCooldownStart;
     public event Action<float> OnCooldownEnd;
 
-    public event Action OnAbilityStart;
+    public event Action<Vector3> OnAbilityStart;
     public event Action<AbilityEventArgs> OnAbilityAim;
     public event Action<Vector3> OnAbilityEnd;
+    public event Action OnAbilityCancel;
 
-    protected virtual void Awake()
+    public virtual void Init(ScriptableAbility data, Player player)
     {
-        data = Resources.Load<ScriptableAbility>("Abilities/" + GetType().ToString());
-        audioSource = GetComponent<AudioSource>();
-    }
-
-    protected virtual void Start()
-    {
-        cooldown = GameManager.Instance.TestMode ? 0.0f : data.Cooldown;
+        this.data = data;
+        this.player = player;
+        audioSource = player.GetComponent<AudioSource>();
+        particle = player.GetComponentInChildren<ParticleSystem>();
     }
 
     public void Activate()
@@ -49,16 +49,16 @@ public abstract class PlayerAbility : MonoBehaviour
 
     protected IEnumerator CooldownUpdate()
     {
-        OnCooldown = true;
-        OnCooldownStart?.Invoke(cooldown);
-        yield return new WaitForSeconds(cooldown);
-        OnCooldown = false;
-        OnCooldownEnd?.Invoke(cooldown);
+        OnCooldownStart?.Invoke(Cooldown);
+        //Debug.Log($"{name} {GetType()} cooldown has started for {Cooldown} seconds.");
+        yield return new WaitForSeconds(Cooldown);
+        //Debug.Log($"{name} {GetType()} cooldown has ended.");
+        OnCooldownEnd?.Invoke(Cooldown);
     }
 
     public virtual void OnAbilityRequestStart()
     {
-        OnAbilityStart?.Invoke();
+        OnAbilityStart?.Invoke(player.transform.position);
     }
 
     public virtual void OnAbilityRequest(Vector3 direction)
@@ -66,7 +66,7 @@ public abstract class PlayerAbility : MonoBehaviour
         var args = new AbilityEventArgs()
         {
             range = Range,
-            startPosition = transform.position,
+            startPosition = player.transform.position,
             direction = direction,
         };
 
@@ -78,6 +78,11 @@ public abstract class PlayerAbility : MonoBehaviour
         OnAbilityEnd?.Invoke(direction);
         audioSource.clip = data.AudioClip;
         audioSource.Play(0);
+    }
+
+    public virtual void OnAbilityRequestCancel()
+    {
+        OnAbilityCancel?.Invoke();
     }
 
 }

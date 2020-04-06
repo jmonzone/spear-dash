@@ -1,21 +1,26 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private Transform player;
-
-    private Vector3 offset;
-
     private void Awake()
     {
-        offset = transform.position;
+        PlayerManager.OnClientPlayerSpawned += OnClientPlayerSpawned;
     }
 
-    private void Update()
+    private void OnClientPlayerSpawned(Player  player)
     {
-        transform.position = player.position + offset;
+        StartCoroutine(FollowPlayer(player.transform));
+    }
+
+    private IEnumerator FollowPlayer(Transform player)
+    {
+        Debug.Log($"Camera is now following {player}");
+        var offset = transform.position;
+        while (player.gameObject.activeSelf)
+        {
+            transform.position = player.position + offset;
+            yield return new WaitForFixedUpdate();
+        }
     }
 }

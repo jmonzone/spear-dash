@@ -24,6 +24,7 @@ public class ScriptableAbility : ScriptableObject
     [SerializeField] private float range;
     [SerializeField] private float damage;
     [SerializeField] private float speed;
+    [SerializeField] private int projectileCount;
 
     public Sprite AbilityIcon => abilityIcon;
     public AudioClip AudioClip => audioClip;
@@ -33,4 +34,5 @@ public class ScriptableAbility : ScriptableObject
     public float Range => range;
     public float Damage => damage;
     public float Speed => speed;
+    public int ProjectileCount => projectileCount;
 }

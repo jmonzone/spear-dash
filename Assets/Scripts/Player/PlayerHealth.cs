@@ -1,7 +1,8 @@
 ﻿using System;
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviourPun
 {
     public const float MAX_HEALTH = 20.0f;
 
@@ -12,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
     public float Value
     {
         get => value;
-        set
+        private set
         {
             this.value = Mathf.Clamp(value, 0, MAX_HEALTH);
 
@@ -38,5 +39,16 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+    }
+
+    public void Damage(float value)
+    {
+        photonView.RPC(nameof(DamageRPC), RpcTarget.All, value);
+    }
+
+    [PunRPC]
+    public void DamageRPC(float damage)
+    {
+        Value -= damage;
     }
 }

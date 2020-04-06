@@ -2,34 +2,43 @@
 
 public class PlayerAnimator : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private Transform spriteTransform;
+    private Transform sprite;
+    private Animator animator;
 
-    private void Awake()
+    public void Init(Player player)
     {
-        var anim = GetComponentInChildren<Animator>();
+        animator = player.GetComponentInChildren<Animator>();
+        sprite = player.transform.Find("Sprite");
 
-        var walk = GetComponent<PlayerWalk>();
+        var walk = GetComponent<PlayerMovementManager>();
+
         walk.OnWalkStart += () =>
         {
-            anim.SetInteger("State", 2);
+            animator.SetInteger("State", 2);
         };
-        walk.OnWalkEnd += () =>
-        {
-            anim.SetInteger("State", 0);
-        };
+
         walk.OnWalk += (direction) =>
         {
             FaceDirection(direction);
+        };
+
+        walk.OnWalkEnd += (direction) =>
+        {
+            animator.SetInteger("State", 0);
+        };
+
+        walk.OnWalkCancel += () =>
+        {
+            animator.SetInteger("State", 0);
         };
     }
 
     private void FaceDirection(Vector3 direction)
     {
-        var scale = spriteTransform.localScale;
+        var scale = sprite.localScale;
         var sign = direction.x < 0 ? -1 : 1;
         scale.x = sign * Mathf.Abs(scale.x);
-        spriteTransform.localScale = scale;
+        sprite.localScale = scale;
     }
 
 }

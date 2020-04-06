@@ -1,19 +1,18 @@
 ﻿<Properties StartupConfiguration="{E950262A-01FC-219B-304C-AD5828830EC8}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Virtual Joysticks/JoystickInput.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Arena/PlayerManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Player/PlayerAttackDirectionIndicator.cs" Line="31" Column="91" />
-      <File FileName="Assets/Scripts/Abilities/Dash.cs" Line="25" Column="1" />
-      <File FileName="Assets/Scripts/Abilities/SpearThrow.cs" Line="23" Column="46" />
-      <File FileName="Assets/Scripts/Abilities/BombThrow.cs" Line="66" Column="21" />
-      <File FileName="Assets/ProjectileColorChanger.cs" Line="10" Column="82" />
-      <File FileName="Assets/Scripts/Projectiles/Projectile.cs" Line="1" Column="1" />
-      <File FileName="Assets/CameraController.cs" Line="18" Column="6" />
-      <File FileName="Assets/Scripts/UI/Virtual Joysticks/JoystickInput.cs" Line="20" Column="1" />
+      <File FileName="Assets/UnlockedAbilityDisplayManager.cs" Line="31" Column="52" />
+      <File FileName="Assets/Scripts/Main/GameManager.cs" Line="51" Column="1" />
+      <File FileName="Assets/Scripts/Main/SelectedAbilityDisplayManager.cs" Line="56" Column="1" />
+      <File FileName="Assets/Scripts/Main/JoinRoom.cs" Line="35" Column="13" />
+      <File FileName="Assets/Scripts/Arena/PlayerManager.cs" Line="5" Column="14" />
+      <File FileName="Assets/Scripts/UI/ResetButton.cs" Line="17" Column="1" NotebookId="1" />
+      <File FileName="Assets/Scripts/UI/CameraController.cs" Line="8" Column="17" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e194d00d-7b0d-479e-9520-cc8992c9b27b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c373ba70-bcb2-4141-96e1-03f9351ca360" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
